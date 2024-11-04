@@ -1,18 +1,21 @@
-// Получил элемент слайдера
-const slider = document.querySelector('.slider'); 
+const slide = document.querySelectorAll(".slides");
+let slideIndex = 0;
+let intervalId = null;
 
-// Получил все слайды
-const slides = document.querySelectorAll('.slide'); 
+initializeSlider();
 
-// Индекс активного слайда
-let current = 0; 
+function initializeSlider() {
+  slides[slideIndex].classList.add("displaySlide");
+}
 
-// Возвращение к первому слайду после последнего РАЗРЕШЕНО
-let cycle = true;
+function showSlide(index) {
 
-// Кнопки Предыдущая/Следующая
-const prevButton = document.querySelector('.btn-prev'); 
-const nextButton = document.querySelector('.btn-next'); 
+}
 
-// Точки пагинации (метод разбивки контента)
-const dots = document.querySelectorAll('.dot'); 
+function prevSlide() {
+
+}
+
+function nextSlide() {
+
+}
