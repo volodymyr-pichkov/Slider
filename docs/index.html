@@ -1,26 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HW 27 Slider</title>
-    <link rel="stylesheet" href="../css/styles.css" />
-  </head>
-  <body>
-    <div class="slider">
-      <div class="slide">
-        <img src="images/img1.jpg" alt="Ring" />
-      </div>
-      <div class="slide">
-        <img src="images/img2.jpg" alt="Gandalf" />
-      </div>
-      <div class="slide">
-        <img src="images/img3.jpg" alt="Frodo" />
-      </div>
-      <button><</button>
-      <button>></button>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HW 27 Slider</title>
+  <link rel="stylesheet" href="./css/styles.css"> <!--Подключение CSS-->
+</head>
+<body>
+  <div class="slider"> <!-- Контейнер для слайдера -->
+    <div class="slider__slides"> <!-- Контейнер для слайдов -->
+      <img src="./images/img1.jpg" alt="New York evening" class="slider__slide">
+      <img src="./images/img2.jpg" alt="New York morning" class="slider__slide">
+      <img src="./images/img3.jpg" alt="New York afternoon" class="slider__slide">
     </div>
+    <button class="slider__btn slider__btn--prev">&#10094</button> <!-- Кнопка назад -->
+    <button class="slider__btn slider__btn--next">&#10095</button> <!-- Кнопка вперёд -->
+  </div>  
 
-    <script src="../js/main.js"></script>
-  </body>
+  <script src="./js/main.js"></script> <!--Подключение JS-->
+</body>
 </html>
