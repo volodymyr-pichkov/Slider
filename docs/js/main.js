@@ -1,4 +1,4 @@
-const slide = document.querySelectorAll(".slides");
+const slide = document.querySelectorAll(".slide");
 let slideIndex = 0;
 let intervalId = null;
 
