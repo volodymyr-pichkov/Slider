@@ -1,21 +1,53 @@
-const slides = document.querySelectorAll(".slider__slides .slider__slide"); // Выбрал все слайды
-let slideIndex = 0;  // Первый слайд
-let intervalId = null; // Остановка авто-переключения ручным способом, привязан к setInterval
-
-document.addEventListener("DOMContentLoaded", initializeSlider); // Событие + функция
+const slides = document.querySelectorAll(".slider__slides .slider__slide"); // Все слайды
+let slideIndex = 0; // Индекс текущего слайда
+let intervalId = null; // Идентификатор интервала
+let isPaused = false; // Флаг для отслеживания паузы
+const dotsContainer = document.querySelector(".slider__dots"); // Контейнер для индикаторов
+document.addEventListener("DOMContentLoaded", initializeSlider); // Инициализация слайдера
 
 function initializeSlider() {
-  if (slides.length > 0) { // Условие на присутствие слайдов
-    slides[slideIndex].classList.add("displaySlide"); // Инициализация первого слайда
+  if (slides.length > 0) {
+    // Инициализация точек
+    createDots();
+
+    // Инициализация первого слайда
+    showSlide(slideIndex);
     intervalId = setInterval(nextSlide, 5000); // Авто-переключение слайдов
 
-    // Привязываем обработчики событий к кнопкам
-    const prevButton = document.querySelector(".slider__btn--prev"); // Предыдущая кнопка
-    const nextButton = document.querySelector(".slider__btn--next"); // Следующая кнопка
+    // Привязка обработчиков событий к кнопкам
+    const prevButton = document.querySelector(".slider__btn--prev");
+    const nextButton = document.querySelector(".slider__btn--next");
+    const pauseButton = document.querySelector(".slider__btn--pause");
 
-    prevButton.addEventListener("click", prevSlide); // Событие на клик
-    nextButton.addEventListener("click", nextSlide); // Событие на клик
+    prevButton.addEventListener("click", prevSlide);
+    nextButton.addEventListener("click", nextSlide);
+    pauseButton.addEventListener("click", togglePause);
+
+    // Привязка обработчиков событий для клавиатуры
+    document.addEventListener("keydown", handleKeyboardNavigation);
   }
+}
+
+function createDots() {
+  // Создание индикаторов в зависимости от количества слайдов
+  slides.forEach((slide, index) => {
+    const dot = document.createElement("div");
+    dot.classList.add("slider__dot");
+    dot.addEventListener("click", () => goToSlide(index));
+    dotsContainer.appendChild(dot);
+  });
+}
+
+function updateDots() {
+  // Обновление активного индикатора
+  const dots = document.querySelectorAll(".slider__dot");
+  dots.forEach((dot, index) => {
+    if (index === slideIndex) {
+      dot.classList.add("active");
+    } else {
+      dot.classList.remove("active");
+    }
+  });
 }
 
 function showSlide(index) {
@@ -26,18 +58,57 @@ function showSlide(index) {
   }
 
   slides.forEach((slide) => {
-    slide.classList.remove("displaySlide"); // Убрал отображение у всех слайдов
+    slide.classList.remove("displaySlide"); // Убираем отображение у всех слайдов
   });
-  slides[slideIndex].classList.add("displaySlide"); // Добавил отображение для текущего слайда
+  slides[slideIndex].classList.add("displaySlide"); // Добавляем отображение для текущего слайда
+  updateDots(); // Обновляем индикаторы
 }
 
 function prevSlide() {
-  clearInterval(intervalId); // Остановка интервала при смене слайда вручную
+  clearInterval(intervalId); // Останавливаем интервал при смене слайда вручную
+  if (!isPaused) {
+    intervalId = setInterval(nextSlide, 5000); // Перезапускаем интервал, если не в паузе
+  }
   slideIndex--;
-  showSlide(slideIndex); // Предыдущий слайд
+  showSlide(slideIndex); // Переход на предыдущий слайд
 }
 
 function nextSlide() {
-  slideIndex++;
-  showSlide(slideIndex); // Следующий слайд
+  if (!isPaused) {
+    slideIndex++;
+    showSlide(slideIndex); // Переход на следующий слайд
+  }
+}
+
+function goToSlide(index) {
+  slideIndex = index;
+  showSlide(slideIndex); // Переход к выбранному слайду через индикатор
+}
+
+function togglePause() {
+  if (isPaused) {
+    intervalId = setInterval(nextSlide, 5000); // Возобновляем авто-переключение
+    isPaused = false;
+  } else {
+    clearInterval(intervalId); // Ставим на паузу
+    isPaused = true;
+  }
+
+  // Изменяем текст на кнопке паузы
+  const pauseButton = document.querySelector(".slider__btn--pause");
+  if (isPaused) {
+    pauseButton.textContent = "Возобновить";
+  } else {
+    pauseButton.textContent = "Пауза";
+  }
+}
+
+function handleKeyboardNavigation(event) {
+  if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+    nextSlide(); // Стрелка вправо или вниз — следующий слайд
+  } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+    prevSlide(); // Стрелка влево или вверх — предыдущий слайд
+  } else if (event.key === " ") {
+    togglePause(); // Пробел — ставит на паузу или возобновляет
+  }
 }

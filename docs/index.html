@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HW 27 Slider</title>
-  <link rel="stylesheet" href="./css/styles.css"> <!--Подключение CSS-->
+  <link rel="stylesheet" href="./css/styles.css"> <!-- Подключение CSS -->
 </head>
 <body>
   <div class="slider"> <!-- Контейнер для слайдера -->
@@ -13,10 +13,13 @@
       <img src="./images/img2.jpg" alt="New York morning" class="slider__slide">
       <img src="./images/img3.jpg" alt="New York afternoon" class="slider__slide">
     </div>
-    <button class="slider__btn slider__btn--prev">&#10094</button> <!-- Кнопка назад -->
-    <button class="slider__btn slider__btn--next">&#10095</button> <!-- Кнопка вперёд -->
-  </div>  
+    <button class="slider__btn slider__btn--prev">&#10094;</button> <!-- Кнопка назад -->
+    <button class="slider__btn slider__btn--next">&#10095;</button> <!-- Кнопка вперёд -->
+    <button class="slider__btn slider__btn--pause">Пауза</button> <!-- Кнопка паузы -->
+    <div class="slider__dots">
+      <!-- Точки создаются в JS -->
+    </div>
 
-  <script src="./js/main.js"></script> <!--Подключение JS-->
+  <script src="./js/main.js"></script> <!-- Подключение JS -->
 </body>
 </html>
